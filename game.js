@@ -1,6 +1,7 @@
 let game;
 let music;
 let won = false;
+
 // global game options
 let gameOptions = {
 
@@ -79,7 +80,6 @@ class preloadGame extends Phaser.Scene{
     }
     preload(){
         this.load.image("platform", "assets/images/platform.png");
-
         // player is a sprite sheet made by 24x48 pixels
         this.load.spritesheet("player", "assets/images/player.png", {
             frameWidth: 24,
@@ -260,6 +260,7 @@ class playGame extends Phaser.Scene{
 
         // adding the player;
         this.player = this.physics.add.sprite(gameOptions.playerStartPosition, game.config.height * 0.7, "player");
+        won = false;
         this.player.setGravityY(gameOptions.playerGravity);
         this.player.setDepth(2);
 
@@ -457,19 +458,17 @@ class playGame extends Phaser.Scene{
     }
 
     update(){
-
         // game over
         if(this.player.y > game.config.height){
             this.scene.start("PlayGame");
             var randomSound = this.getRandomSound(['aya', 'nuLema', 'avalBikashti']);
             this.sound.play(randomSound);
-            won = false;
             music.stop();
         }
 
         this.player.x = gameOptions.playerStartPosition;
         var style = { font: "22px Arial", fill: "#000"};
-        if (this.points >= 5 && !won) {
+        if (this.points >= 300 && !won) {
             this.add.text(500, 100, 'סוד הקסם נמצא מאחורי הרמיוני', style);
             won = true;
         }
