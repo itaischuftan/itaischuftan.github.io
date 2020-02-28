@@ -1,6 +1,6 @@
 let game;
 let music;
-
+let won = false;
 // global game options
 let gameOptions = {
 
@@ -468,9 +468,9 @@ class playGame extends Phaser.Scene{
 
         this.player.x = gameOptions.playerStartPosition;
         var style = { font: "22px Arial", fill: "#000"};
-        if (this.points >= 300) {
+        if (this.points >= 5 && !won) {
             this.add.text(500, 100, 'סוד הקסם נמצא מאחורי הרמיוני', style);
-            this.player.anims.stop();
+            won = true;
         }
         // recycling platforms
         let minDistance = game.config.width;
