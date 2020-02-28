@@ -433,6 +433,10 @@ class playGame extends Phaser.Scene{
         }
     }
 
+    getRandomSound(sounds) {
+        return sounds[Math.floor(Math.random() * Math.floor(sounds.length))];
+    }
+
     // the player jumps when on the ground, or once in the air as long as there are jumps left and the first jump was on the ground
     // and obviously if the player is not dying
     jump(){
@@ -442,7 +446,10 @@ class playGame extends Phaser.Scene{
             }
             this.player.setVelocityY(gameOptions.jumpForce * -1);
             this.playerJumps ++;
-            this.sound.play(['hehe', 'tralala', 'yaaa'][Math.floor(Math.random() * Math.floor(3))]);
+            if (this.playerJumps === 3) {
+                var randomSound = this.getRandomSound(['yaaa','tralala','hehe']);
+                this.sound.play(randomSound);
+            }
 
             // stops animation
             this.player.anims.stop();
@@ -454,7 +461,8 @@ class playGame extends Phaser.Scene{
         // game over
         if(this.player.y > game.config.height){
             this.scene.start("PlayGame");
-            this.sound.play(['aya', 'nuLema', 'avalBikashti'][Math.floor(Math.random() * Math.floor(3))]);
+            var randomSound = this.getRandomSound(['aya', 'nuLema', 'avalBikashti']);
+            this.sound.play(randomSound);
             music.stop();
         }
 
