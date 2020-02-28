@@ -1,0 +1,17 @@
+{
+  "name": "game",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "http-server": "^0.12.1",
+    "phaser": "file:phaser"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "test",
+    "start": "node node_modules/http-server/bin/http-server"
+  },
+  "author": "Itai Schuftan",
+  "license": "ISC"
+}
