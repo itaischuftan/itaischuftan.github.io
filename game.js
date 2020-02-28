@@ -507,6 +507,7 @@ class playGame extends Phaser.Scene{
             }
             this.player.setVelocityY(gameOptions.jumpForce * -1);
             this.playerJumps ++;
+            this.sound.play(['hehe', 'tralala', 'yaaa'][Math.floor(Math.random() * Math.floor(3))]);
 
             // stops animation
             this.player.anims.stop();
