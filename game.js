@@ -463,6 +463,7 @@ class playGame extends Phaser.Scene{
             this.scene.start("PlayGame");
             var randomSound = this.getRandomSound(['aya', 'nuLema', 'avalBikashti']);
             this.sound.play(randomSound);
+            won = false;
             music.stop();
         }
 
