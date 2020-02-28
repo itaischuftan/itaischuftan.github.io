@@ -13,8 +13,6 @@ let gameOptions = {
     // cloud speed, in pixels per second
     cloudSpeed: 40,
 
-    photoSpeed: 100,
-
     // spawn range, how far should be the rightmost platform from the right edge
     // before next platform spawns, in pixels
     spawnRange: [80, 300],
@@ -117,37 +115,6 @@ class preloadGame extends Phaser.Scene{
             frameHeight: 72
         });
 
-        // mountains are a sprite sheet made by 512x512 pixels
-        this.load.image("1", "assets/images/us/1.jpg", {
-            frameWidth: 447,
-            frameHeight: 512
-        });
-
-        this.load.image("2", "assets/images/us/2.jpg", {
-            frameWidth: 447,
-            frameHeight: 512
-        });
-
-        this.load.image("3", "assets/images/us/3.jpg", {
-            frameWidth: 447,
-            frameHeight: 512
-        });
-
-        this.load.image("4", "assets/images/us/4.jpg", {
-            frameWidth: 447,
-            frameHeight: 512
-        });
-
-        this.load.image("5", "assets/images/us/5.jpg", {
-            frameWidth: 447,
-            frameHeight: 512
-        });
-
-        this.load.image("6", "assets/images/us/6.jpg", {
-            frameWidth: 447,
-            frameHeight: 512
-        });
-
         this.load.audio('aya', ['assets/audio/Aya.ogg']);
         this.load.audio('avalBikashti', ['assets/audio/AvalBikashti.ogg']);
         this.load.audio('hehe', ['assets/audio/hehe.ogg']);
@@ -213,8 +180,6 @@ class playGame extends Phaser.Scene{
         this.mountainGroup = this.add.group();
 
         this.cloudGroup = this.add.group();
-
-        this.photoGroup = this.add.group();
 
         // group with all active platforms.
         this.platformGroup = this.add.group({
@@ -283,9 +248,6 @@ class playGame extends Phaser.Scene{
 
         // adding a cloud
         this.addClouds()
-
-        // adding a photo
-        // this.addPhotos()
 
         // keeping track of added platforms
         this.addedPlatforms = 0;
@@ -369,33 +331,6 @@ class playGame extends Phaser.Scene{
             rightmostMountain = Math.max(rightmostMountain, mountain.x);
         })
         return rightmostMountain;
-    }
-
-    // getting rightmost photo x position
-    getRightmostPhoto(){
-        let rightmostPhoto = -200;
-        this.photoGroup.getChildren().forEach(function(photo){
-            rightmostPhoto = Math.max(rightmostPhoto, photo.x);
-        })
-        return rightmostPhoto;
-    }
-
-    // adding photos
-    addPhotos(){
-        let randomPhoto = Math.floor(Math.random() * Math.floor(7)).toString();
-        console.log(randomPhoto);
-        let rightmostPhoto = this.getRightmostPhoto();
-        if(rightmostPhoto < game.config.width * 2){
-            let photo = this.physics.add.sprite(rightmostPhoto + Phaser.Math.Between(100, 350), game.config.height + Phaser.Math.Between(0, 100), randomPhoto);
-            photo.setOrigin(0.5, 1);
-            photo.body.setVelocityX(gameOptions.photoSpeed * -1)
-            this.photoGroup.add(photo);
-            if(Phaser.Math.Between(0, 1)){
-                photo.setDepth(1);
-            }
-            photo.setFrame(Phaser.Math.Between(0, 3))
-            this.addPhotos()
-        }
     }
 
     // getting rightmost cloud x position
@@ -582,19 +517,6 @@ class playGame extends Phaser.Scene{
                 cloud.setFrame(Phaser.Math.Between(0, 3))
                 if(Phaser.Math.Between(0, 1)){
                     cloud.setDepth(1);
-                }
-            }
-        }, this);
-
-        // recycling photos
-        this.photoGroup.getChildren().forEach(function(photo){
-            if(photo.x < - photo.displayWidth){
-                let rightmostPhoto = this.getRightmostPhoto();
-                photo.x = rightmostPhoto + Phaser.Math.Between(100, 350);
-                photo.y = game.config.height + Phaser.Math.Between(0, 100);
-                photo.setFrame(Phaser.Math.Between(0, 3))
-                if(Phaser.Math.Between(0, 1)){
-                    photo.setDepth(1);
                 }
             }
         }, this);
